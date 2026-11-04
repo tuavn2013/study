@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vocab Adventure â€“ Unit 1</title>
+<style>
+:root{--bg:#eef6ff;--ink:#1b2559;--coral:#ff5d73;--sun:#ffc233;--teal:#12b5a6;--vio:#6c5ce7}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Trebuchet MS","Segoe UI",Arial,sans-serif}
+header{background:var(--vio);color:#fff;text-align:center;padding:22px 12px;border-bottom:8px solid var(--sun)}
+h1{margin:0;font-size:2rem}header p{margin:4px 0 0}
+nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:14px}
+button{font:inherit;cursor:pointer}
+nav button,.chip{border:3px solid var(--ink);background:#fff;color:var(--ink);border-radius:14px;padding:8px 16px;font-weight:700}
+nav button.on,.chip.on{background:var(--sun)}
+main{max-width:980px;margin:auto;padding:0 14px 40px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}.chip{padding:5px 11px;font-size:.88rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.card{background:#fff;border:3px solid var(--ink);border-radius:18px;padding:16px;box-shadow:5px 5px 0 var(--c)}
+.card h3{margin:0;font-size:1.4rem;color:var(--c)}.pos{font-style:italic;font-size:.85rem;background:#eef;border-radius:8px;padding:1px 8px}
+.vi{font-weight:700;margin:4px 0 8px}
+.k{display:block;font-weight:800;font-size:.85rem;color:var(--c);margin-top:8px}
+.ex{background:#f4f8ff;border-left:5px solid var(--c);padding:6px 10px;border-radius:8px;margin-top:8px}
+.ex small{display:block;color:#566}
+.say{border:0;background:var(--c);color:#fff;border-radius:50%;width:34px;height:34px;float:right}
+.box{background:#fff;border:3px solid var(--ink);border-radius:20px;padding:20px;text-align:center}
+select,input{font:inherit;padding:8px 12px;border:3px solid var(--ink);border-radius:12px;margin:4px;max-width:100%}
+.go{background:var(--teal);color:#fff;border:3px solid var(--ink);border-radius:14px;padding:9px 20px;font-weight:800;margin:5px}
+.go.r{background:var(--coral)}.go.y{background:var(--sun);color:var(--ink)}
+.fc{height:340px;max-width:560px;margin:12px auto;perspective:900px;cursor:pointer}
+.in{position:relative;height:100%;transition:transform .5s;transform-style:preserve-3d}.in.f{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border:3px solid var(--ink);border-radius:20px;padding:16px;overflow:auto;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:#fff}
+.face.b{transform:rotateY(180deg);background:var(--c);color:#fff;align-items:flex-start;text-align:left}
+.face.b .k{color:var(--sun)}
+.q{font-size:1.3rem;font-weight:800;margin:10px 0}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opt{border:3px solid var(--ink);background:#fff;border-radius:14px;padding:12px;font-weight:700}
+.opt.ok,input.ok{background:#c8f7dc;border-color:var(--teal)}.opt.no,input.no{background:#ffd9de;border-color:var(--coral)}
+.bar{height:12px;background:#dde;border-radius:8px;overflow:hidden}.bar i{display:block;height:100%;background:var(--coral);width:0;transition:.3s}
+.opt.sel{background:var(--sun)}.hide{display:none!important}
+@media(max-width:560px){.opts{grid-template-columns:1fr}}
+</style></head><body>
+<header><h1>ðŸš€ Vocab Adventure</h1><p>Unit 1: Travel â€“ 5 tá»« Ä‘áº§u</p></header>
+<nav id="nav"></nav>
+<main>
+<section id="learn"><div class="chips" id="chips"></div><div class="grid" id="grid"></div></section>
+<section id="cards" class="hide"><div class="box"><select id="fu"></select><label><input type="checkbox" id="fs"> XÃ¡o trá»™n</label><div id="fi"></div></div>
+<div class="fc" onclick="document.getElementById('in').classList.toggle('f')"><div class="in" id="in"><div class="face" id="ff"></div><div class="face b" id="fb"></div></div></div>
+<div style="text-align:center"><button class="go y" onclick="fn(-1)">â—€ TrÆ°á»›c</button><button class="go" onclick="fn(1)">Sau â–¶</button></div></section>
+<section id="quiz" class="hide"><div class="box" id="st"><h2>ðŸŽ® BÃ i táº­p</h2><p>Chá»n Unit, chá»n tá»« muá»‘n kiá»ƒm tra (hoáº·c cáº£ Unit) vÃ  chá»n cÃ¡c má»¥c cáº§n kiá»ƒm tra. Má»—i lÆ°á»£t chÆ¡i cÃ³ <b>30 phÃºt</b>. Má»™t tá»« cÃ³ nhiá»u loáº¡i tá»« thÃ¬ Ä‘Æ°á»£c chá»n nhiá»u Ä‘Ã¡p Ã¡n. Má»—i cÃ¢u Ä‘Ãºng +10 Ä‘iá»ƒm.</p><div><select id="qu"></select><select id="qw"></select></div><div id="qk" style="margin:8px 0"></div><div id="tl" style="font-weight:800;margin:6px 0"></div><button class="go" onclick="qs()">Báº¯t Ä‘áº§u!</button><button class="go y" onclick="TL[+$('qu').value]=1800;LM='';showTL()">ðŸ”„ Äáº·t láº¡i 30 phÃºt</button></div>
+<div class="box hide" id="pl"><b id="qn"></b> Â· <b id="sc"></b> Â· <b id="tm"></b><div class="bar"><i id="pr"></i></div><div class="q" id="qt"></div><div id="qo"></div><div class="q" id="fbk"></div><button class="go hide" id="nx" onclick="nq()">Tiáº¿p âžœ</button><div><button class="go r" onclick="stopQ()">â¹ Dá»«ng, chá»n tá»« khÃ¡c</button></div></div>
+<div class="box hide" id="rs"><div style="font-size:3.5rem" id="tr"></div><h2 id="rt"></h2><button class="go" onclick="qs()">ChÆ¡i láº¡i</button><button class="go y" onclick="back()">Chá»n tá»« khÃ¡c</button></div></section>
+</main>
+<script>
+// Má»—i dÃ²ng: tá»«|loáº¡i tá»«|nghÄ©a|Word forms|Synonyms|Antonyms|Expressions|vÃ­ dá»¥|dá»‹ch vÃ­ dá»¥ (cÃ¡c má»¥c cÃ¡ch nhau báº±ng "; ")
+// ThÃªm tá»« má»›i: chÃ©p thÃªm má»™t dÃ²ng cÃ¹ng Ä‘á»‹nh dáº¡ng vÃ o Unit tÆ°Æ¡ng á»©ng.
+const U=[
+["Unit 1: Travel","âœˆï¸","#0b7285",`organizing vocabulary|n. (study skill)|sáº¯p xáº¿p tá»« vá»±ng theo nhÃ³m|organize (v.) sáº¯p xáº¿p; organization (n.) sá»± sáº¯p xáº¿p/tá»• chá»©c; organized (adj.) cÃ³ tá»• chá»©c|classifying words (phÃ¢n loáº¡i tá»«); grouping vocabulary (nhÃ³m tá»« vá»±ng)|random memorization (ghi nhá»› ngáº«u nhiÃªn)|organize words by topic (nhÃ³m tá»« theo chá»§ Ä‘á»); group words by part of speech (nhÃ³m tá»« theo tá»« loáº¡i); vocabulary notebook (sá»• tay tá»« vá»±ng)|Organizing vocabulary helps students remember travel words more systematically.|Sáº¯p xáº¿p tá»« vá»±ng giÃºp há»c sinh nhá»› tá»« vá» du lá»‹ch cÃ³ há»‡ thá»‘ng hÆ¡n.
+word family|n.|há» tá»«|family (n.) gia Ä‘Ã¬nh/nhÃ³m; familiar (adj.) quen thuá»™c; familiarize (v.) lÃ m quen|related words (cÃ¡c tá»« liÃªn quan); word group (nhÃ³m tá»«)|unrelated words (cÃ¡c tá»« khÃ´ng liÃªn quan)|learn a word family (há»c há» tá»«); build word families (xÃ¢y dá»±ng há» tá»«); same root (cÃ¹ng gá»‘c tá»«)|The word family of navigate includes navigation and navigator.|Há» tá»« cá»§a navigate gá»“m navigation vÃ  navigator.
+collocation|n.|cá»¥m tá»« káº¿t há»£p tá»± nhiÃªn|collocate (v.) káº¿t há»£p tá»± nhiÃªn; collocational (adj.) thuá»™c káº¿t há»£p tá»«|word partnership (cáº·p tá»« thÆ°á»ng Ä‘i vá»›i nhau); fixed combination (káº¿t há»£p cá»‘ Ä‘á»‹nh)|unnatural combination (káº¿t há»£p khÃ´ng tá»± nhiÃªn)|strong collocation (káº¿t há»£p máº¡nh); common collocation (káº¿t há»£p phá»• biáº¿n); learn collocations (há»c káº¿t há»£p tá»«)|Book accommodation is a natural collocation in travel English.|Book accommodation lÃ  má»™t káº¿t há»£p tá»« tá»± nhiÃªn trong tiáº¿ng Anh du lá»‹ch.
+genuine|adj.|tháº­t, chÃ¢n tháº­t|genuinely (adv.) má»™t cÃ¡ch chÃ¢n tháº­t; genuineness (n.) tÃ­nh chÃ¢n tháº­t|real (tháº­t); authentic (xÃ¡c thá»±c); honest (trung thá»±c)|fake (giáº£); artificial (nhÃ¢n táº¡o/giáº£); dishonest (khÃ´ng trung thá»±c)|genuine traveller (du khÃ¡ch tháº­t); genuine review (Ä‘Ã¡nh giÃ¡ chÃ¢n tháº­t); genuine interest (sá»± quan tÃ¢m tháº­t sá»±)|Genuine reviews are usually more useful than advertisements.|CÃ¡c Ä‘Ã¡nh giÃ¡ chÃ¢n tháº­t thÆ°á»ng há»¯u Ã­ch hÆ¡n quáº£ng cÃ¡o.
+spare|adj./n./v.|thá»«a, dá»± phÃ²ng; dÃ nh ra|sparingly (adv.) má»™t cÃ¡ch tiáº¿t kiá»‡m|extra (thÃªm); available (sáºµn cÃ³); free (ráº£nh)|occupied (báº­n); unavailable (khÃ´ng sáºµn cÃ³)|spare room (phÃ²ng trá»‘ng); spare time (thá»i gian ráº£nh); spare key (chÃ¬a khÃ³a dá»± phÃ²ng)|A spare room can help travellers save money on accommodation.|Má»™t phÃ²ng trá»‘ng cÃ³ thá»ƒ giÃºp du khÃ¡ch tiáº¿t kiá»‡m tiá»n chá»— á»Ÿ.`]
+];
+const $=id=>document.getElementById(id),sh=a=>[...a].sort(()=>Math.random()-.5);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const ps=t=>t.split("; ").map(x=>{const m=x.match(/^(.*?)\s*\(([^)]*)\)\s*(.*)$/);return m?{t:m[1],a:m[2],r:m[3]}:{t:x,a:"",r:""}});
+const mkW=(l,c,u)=>{const f=l.split("|"),w={w:f[0],pos:f[1],vi:f[2],fm:f[3],sy:f[4],an:f[5],ex:f[6],s:f[7],sv:f[8],c,u};w.F=ps(w.fm);w.S=ps(w.sy);w.A=ps(w.an);w.E=ps(w.ex);return w};
+const W=U.flatMap((u,i)=>u[3].split("\n").map(l=>mkW(l,u[2],i)));
+const pool=v=>v==="all"?W:W.filter(w=>w.u==v);
+const say=w=>{if(!speechSynthesis)return;const u=new SpeechSynthesisUtterance(w);u.lang="en-US";u.rate=.85;speechSynthesis.cancel();speechSynthesis.speak(u)};
+const detail=w=>`<span class="k">Word forms / Pattern</span>${esc(w.fm)}<span class="k">Synonyms</span>${esc(w.sy)}<span class="k">Antonyms</span>${esc(w.an)}<span class="k">Expressions</span>${esc(w.ex)}<div class="ex" style="color:#1b2559">${esc(w.s)}<small>${esc(w.sv)}</small></div>`;
+const opts='<option value="all">ðŸŒˆ Táº¥t cáº£</option>'+U.map((u,i)=>`<option value="${i}">${u[1]} ${u[0]}</option>`).join("");
+$("fu").innerHTML=opts;function fillW(){const k=+$("qu").value;$("qw").innerHTML='<option value="all">ðŸŒˆ Táº¥t cáº£ cÃ¡c tá»« trong Unit</option>'+W.map((w,i)=>w.u===k?`<option value="${i}">${w.w}</option>`:"").join("")}
+$("qu").innerHTML=U.map((u,i)=>`<option value="${i}">${u[1]} ${u[0]}</option>`).join("");$("qu").onchange=fillW;fillW();
+const tabs=[["learn","ðŸ“š Há»c tá»«"],["cards","ðŸƒ Flashcard"],["quiz","ðŸŽ® BÃ i táº­p"]];
+$("nav").innerHTML=tabs.map(t=>`<button data-t="${t[0]}" onclick="show('${t[0]}')">${t[1]}</button>`).join("");
+function show(t){tabs.forEach(x=>{$(x[0]).classList.toggle("hide",x[0]!==t)});document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.t===t));if(t==="cards")fstart()}
+let cur=0;
+function learn(){
+ $("chips").innerHTML=U.map((u,i)=>`<button class="chip ${i===cur?"on":""}" onclick="cur=${i};learn()">${u[1]} ${u[0].split(":")[0]}</button>`).join("");
+ $("grid").innerHTML=pool(cur).map(w=>`<div class="card" style="--c:${w.c}"><button class="say" data-w="${esc(w.w)}" onclick="say(this.dataset.w)">ðŸ”Š</button><h3>${esc(w.w)}</h3><span class="pos">${esc(w.pos)}</span><div class="vi">${esc(w.vi)}</div>${detail(w)}</div>`).join("");
+}
+let deck=[],fi=0;
+function fstart(){const p=pool($("fu").value);deck=$("fs").checked?sh(p):p;fi=0;fshow()}
+function fn(d){fi=(fi+d+deck.length)%deck.length;fshow()}
+function fshow(){const w=deck[fi];$("in").classList.remove("f");$("in").style.setProperty("--c",w.c);$("fb").style.setProperty("--c",w.c);$("ff").style.borderColor=w.c;
+ $("ff").innerHTML=`<h2 style="color:${w.c};margin:0">${esc(w.w)}</h2><span class="pos">${esc(w.pos)}</span><p>ðŸ‘† Cháº¡m Ä‘á»ƒ xem nghÄ©a, há» tá»«, Ä‘á»“ng/trÃ¡i nghÄ©a</p>`;
+ $("fb").innerHTML=`<b style="font-size:1.4rem">${esc(w.vi)}</b>`+detail(w).replace('class="ex" style="color:#1b2559"','class="ex" style="color:#1b2559;width:100%"');
+ $("fi").textContent=`Tháº» ${fi+1}/${deck.length}`;say(w.w)}
+let Q=[],qi=0,sc=0,lock=0,ST={},sel=new Set();
+const KS={word:"Tá»« cáº§n há»c",form:"Word forms / Pattern",syn:"Synonyms",ant:"Antonyms",exp:"Expressions",ex:"Example"};
+const tags=p=>[...p.matchAll(/(phr\. v|adj|adv|prep|n|v)\./g)].map(m=>m[1]+".");
+const norm=t=>t.toLowerCase().replace(/\s+/g," ").trim();
+const hint=a=>a.split(" ").map(x=>x[0]+"_".repeat(x.length-1)).join("  ");
+const sp=(k,q,a)=>({k,q,a,ty:1,fb:""});
+const mv=(k,q,a,pool)=>({k,q,a,fb:"",o:sh([a,...sh([...new Set(pool)]).filter(x=>x&&x!==a).slice(0,3)])});
+function build(w){const O=W.filter(x=>x!==w),L=[],g=(k)=>O.flatMap(x=>x[k]).map(z=>z.a),h=(k)=>O.flatMap(x=>x[k]).map(z=>z.r);
+ L.push(sp("word",`NghÄ©a tiáº¿ng Viá»‡t: "${w.vi}". GÃµ tá»«/cá»¥m tiáº¿ng Anh:`,w.w));
+ L.push({k:"word",q:`Chá»n Táº¤T Cáº¢ loáº¡i tá»« cá»§a "${w.w}" (má»™t tá»« cÃ³ thá»ƒ cÃ³ nhiá»u loáº¡i tá»«):`,ms:1,a:tags(w.pos),fb:`${w.w}: ${w.pos}`});
+ L.push(mv("word",`"${w.w}" nghÄ©a lÃ  gÃ¬?`,w.vi,O.map(x=>x.vi)));
+ w.F.forEach(f=>{L.push(sp("form",`Há» tá»« cá»§a "${w.w}": tá»« loáº¡i (${f.a}), nghÄ©a "${f.r}". GÃµ tá»« tiáº¿ng Anh:`,f.t));L.push(mv("form",`"${f.t}" (${f.a}) nghÄ©a lÃ  gÃ¬?`,f.r,h("F")))});
+ w.S.forEach(s=>{L.push(sp("syn",`GÃµ tá»«/cá»¥m Äá»’NG NGHÄ¨A vá»›i "${w.w}" cÃ³ nghÄ©a "${s.a}":`,s.t));L.push(mv("syn",`"${s.t}" (Ä‘á»“ng nghÄ©a vá»›i "${w.w}") nghÄ©a lÃ  gÃ¬?`,s.a,g("S")))});
+ w.A.forEach(s=>{L.push(sp("ant",`GÃµ tá»«/cá»¥m TRÃI NGHÄ¨A vá»›i "${w.w}" cÃ³ nghÄ©a "${s.a}":`,s.t));L.push(mv("ant",`"${s.t}" (trÃ¡i nghÄ©a vá»›i "${w.w}") nghÄ©a lÃ  gÃ¬?`,s.a,g("A")))});
+ w.E.forEach(e=>{L.push(sp("exp",`GÃµ cá»¥m tá»« (dÃ¹ng vá»›i "${w.w}") cÃ³ nghÄ©a "${e.a}":`,e.t));L.push(mv("exp",`Cá»¥m "${e.t}" nghÄ©a lÃ  gÃ¬?`,e.a,g("E")))});
+ L.push(mv("ex",`Dá»‹ch cÃ¢u sang tiáº¿ng Viá»‡t: "${w.s}"`,w.sv,O.map(x=>x.sv)));
+ return L}
+let T=0,TI=null,TL={},cu=0,LM="";
+const fmt=t=>String(t/60|0).padStart(2,"0")+":"+String(t%60).padStart(2,"0");
+function showTL(){const t=TL[+$("qu").value]??1800;$("tl").innerHTML=(LM?LM+"<br>":"")+"â± Thá»i gian cÃ²n láº¡i cá»§a Unit: "+fmt(t)}
+function tick(){T--;TL[cu]=T;$("tm").textContent="â± "+fmt(T);if(T<=0)fin(true)}
+function qs(){clearInterval(TI);const k=+$("qu").value,wv=$("qw").value,ks=[...document.querySelectorAll("#qk input:checked")].map(x=>x.value);
+ if(!ks.length){alert("HÃ£y chá»n Ã­t nháº¥t má»™t má»¥c Ä‘á»ƒ kiá»ƒm tra.");return}
+ if((TL[k]??1800)<=0){alert("Unit nÃ y Ä‘Ã£ háº¿t 30 phÃºt. Báº¥m 'Äáº·t láº¡i 30 phÃºt' Ä‘á»ƒ chÆ¡i tiáº¿p.");return}
+ Q=sh((wv==="all"?W.filter(w=>w.u===k):[W[+wv]]).flatMap(build).filter(q=>ks.includes(q.k)));qi=0;sc=0;ST={};LM="";
+ cu=k;T=TL[k]??1800;$("tm").textContent="â± "+fmt(T);TI=setInterval(tick,1000);
+ ["st","rs"].forEach(i=>$(i).classList.add("hide"));$("pl").classList.remove("hide");qshow()}
+function back(){clearInterval(TI);["pl","rs"].forEach(i=>$(i).classList.add("hide"));$("st").classList.remove("hide");showTL()}
+function stopQ(){const n=Object.values(ST).reduce((a,x)=>a+x[1],0);TL[cu]=T;LM=`â¹ ÄÃ£ dá»«ng: ${n} cÃ¢u, ${sc} Ä‘iá»ƒm.`;back()}
+function qshow(){lock=0;sel=new Set();const q=Q[qi];$("qn").textContent=`CÃ¢u ${qi+1}/${Q.length} Â· ${KS[q.k]}`;$("sc").textContent=`â­ ${sc}`;$("pr").style.width=qi/Q.length*100+"%";$("fbk").textContent="";$("nx").classList.add("hide");$("qt").textContent=q.q;
+ $("qo").className=q.o||q.ms?"opts":"";
+ if(q.o)$("qo").innerHTML=q.o.map((o,i)=>`<button class="opt" onclick="ans(${i})">${esc(o)}</button>`).join("");
+ else if(q.ms)$("qo").innerHTML=["n.","v.","adj.","adv."].map(t=>`<button class="opt" onclick="tg(this,'${t}')">${t}</button>`).join("")+`<button class="go" style="grid-column:1/-1" onclick="chkm()">Kiá»ƒm tra</button>`;
+ else{$("qo").innerHTML=`<div class="ex" style="--c:#6c5ce7;text-align:left"><small>Gá»£i Ã½: ${esc(hint(q.a))}</small></div><input id="in2" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="GÃµ Ä‘Ã¡p Ã¡n"><button class="go" onclick="chk()">Kiá»ƒm tra</button>`;$("in2").focus();$("in2").onkeydown=e=>{if(e.key==="Enter")lock?nq():chk()}}}
+function end(ok){const q=Q[qi];ST[q.k]=ST[q.k]||[0,0];ST[q.k][1]++;if(ok){sc+=10;ST[q.k][0]++}$("sc").textContent=`â­ ${sc}`;$("fbk").innerHTML=(ok?"ðŸŽ‰ ChÃ­nh xÃ¡c! +10":`ðŸ˜… ÄÃ¡p Ã¡n: <u>${esc([].concat(q.a).join(", "))}</u>`)+(q.fb?`<br><small>${esc(q.fb)}</small>`:"");$("fbk").style.color=ok?"#0a8f55":"#d6336c";$("nx").classList.remove("hide");$("nx").textContent=qi==Q.length-1?"Xem káº¿t quáº£ ðŸ†":"Tiáº¿p âžœ"}
+function ans(i){if(lock)return;lock=1;const q=Q[qi],b=[...document.querySelectorAll(".opt")],ok=q.o[i]===q.a;b.forEach(x=>x.disabled=1);b[i].classList.add(ok?"ok":"no");b[q.o.indexOf(q.a)].classList.add("ok");end(ok)}
+function tg(b,t){if(lock)return;sel.has(t)?sel.delete(t):sel.add(t);b.classList.toggle("sel")}
+function chkm(){if(lock||!sel.size)return;lock=1;const a=Q[qi].a;end(sel.size===a.length&&a.every(t=>sel.has(t)))}
+function chk(){if(lock)return;const i=$("in2");if(!i.value.trim())return;lock=1;const ok=norm(i.value)===norm(Q[qi].a);i.disabled=1;i.classList.add(ok?"ok":"no");end(ok)}
+function fin(out){clearInterval(TI);TL[cu]=Math.max(T,0);lock=1;$("pl").classList.add("hide");$("rs").classList.remove("hide");const n=Object.values(ST).reduce((a,x)=>a+x[1],0),p=sc/(Math.max(n,1)*10);$("tr").textContent=out?"â°":p>=.9?"ðŸ†":p>=.6?"ðŸ¥ˆ":"ðŸ’ª";$("rt").innerHTML=(out?"Háº¿t giá»! ":"")+`Báº¡n Ä‘Ã£ lÃ m ${n}/${Q.length} cÃ¢u, Ä‘Æ°á»£c ${sc} Ä‘iá»ƒm<br><small>`+Object.keys(ST).map(k=>`${KS[k]}: ${ST[k][0]}/${ST[k][1]}`).join(" Â· ")+"</small>"}
+function nq(){if(++qi>=Q.length)return fin(false);qshow()}
+$("qk").innerHTML=Object.keys(KS).map(k=>`<label style="display:inline-block;margin:4px 8px;font-weight:700"><input type="checkbox" value="${k}" checked> ${KS[k]}</label>`).join("");
+$("qu").onchange=()=>{fillW();showTL()};showTL();
+learn();show("learn");
+</script></body></html>
