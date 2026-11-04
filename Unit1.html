@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vocab Adventure – Unit 1</title>
+<style>
+:root{--bg:#eef6ff;--ink:#1b2559;--coral:#ff5d73;--sun:#ffc233;--teal:#12b5a6;--vio:#6c5ce7}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Trebuchet MS","Segoe UI",Arial,sans-serif}
+header{background:var(--vio);color:#fff;text-align:center;padding:22px 12px;border-bottom:8px solid var(--sun)}
+h1{margin:0;font-size:2rem}header p{margin:4px 0 0}
+nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:14px}
+button{font:inherit;cursor:pointer}
+nav button,.chip{border:3px solid var(--ink);background:#fff;color:var(--ink);border-radius:14px;padding:8px 16px;font-weight:700}
+nav button.on,.chip.on{background:var(--sun)}
+main{max-width:980px;margin:auto;padding:0 14px 40px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}.chip{padding:5px 11px;font-size:.88rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.card{background:#fff;border:3px solid var(--ink);border-radius:18px;padding:16px;box-shadow:5px 5px 0 var(--c)}
+.card h3{margin:0;font-size:1.4rem;color:var(--c)}.pos{font-style:italic;font-size:.85rem;background:#eef;border-radius:8px;padding:1px 8px}
+.vi{font-weight:700;margin:4px 0 8px}
+.k{display:block;font-weight:800;font-size:.85rem;color:var(--c);margin-top:8px}
+.ex{background:#f4f8ff;border-left:5px solid var(--c);padding:6px 10px;border-radius:8px;margin-top:8px}
+.ex small{display:block;color:#566}
+.say{border:0;background:var(--c);color:#fff;border-radius:50%;width:34px;height:34px;float:right}
+.box{background:#fff;border:3px solid var(--ink);border-radius:20px;padding:20px;text-align:center}
+select,input{font:inherit;padding:8px 12px;border:3px solid var(--ink);border-radius:12px;margin:4px;max-width:100%}
+.go{background:var(--teal);color:#fff;border:3px solid var(--ink);border-radius:14px;padding:9px 20px;font-weight:800;margin:5px}
+.go.r{background:var(--coral)}.go.y{background:var(--sun);color:var(--ink)}
+.fc{height:340px;max-width:560px;margin:12px auto;perspective:900px;cursor:pointer}
+.in{position:relative;height:100%;transition:transform .5s;transform-style:preserve-3d}.in.f{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border:3px solid var(--ink);border-radius:20px;padding:16px;overflow:auto;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:#fff}
+.face.b{transform:rotateY(180deg);background:var(--c);color:#fff;align-items:flex-start;text-align:left}
+.face.b .k{color:var(--sun)}
+.q{font-size:1.3rem;font-weight:800;margin:10px 0}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opt{border:3px solid var(--ink);background:#fff;border-radius:14px;padding:12px;font-weight:700}
+.opt.ok,input.ok{background:#c8f7dc;border-color:var(--teal)}.opt.no,input.no{background:#ffd9de;border-color:var(--coral)}
+.bar{height:12px;background:#dde;border-radius:8px;overflow:hidden}.bar i{display:block;height:100%;background:var(--coral);width:0;transition:.3s}
+.opt.sel{background:var(--sun)}.hide{display:none!important}
+@media(max-width:560px){.opts{grid-template-columns:1fr}}
+</style></head><body>
+<header><h1>🚀 Vocab Adventure</h1><p>Unit 1: Travel – 5 từ đầu</p></header>
+<nav id="nav"></nav>
+<main>
+<section id="learn"><div class="chips" id="chips"></div><div class="grid" id="grid"></div></section>
+<section id="cards" class="hide"><div class="box"><select id="fu"></select><label><input type="checkbox" id="fs"> Xáo trộn</label><div id="fi"></div></div>
+<div class="fc" onclick="document.getElementById('in').classList.toggle('f')"><div class="in" id="in"><div class="face" id="ff"></div><div class="face b" id="fb"></div></div></div>
+<div style="text-align:center"><button class="go y" onclick="fn(-1)">◀ Trước</button><button class="go" onclick="fn(1)">Sau ▶</button></div></section>
+<section id="quiz" class="hide"><div class="box" id="st"><h2>🎮 Bài tập</h2><p>Chọn Unit, chọn từ muốn kiểm tra (hoặc cả Unit) và chọn các mục cần kiểm tra. Mỗi lượt chơi có <b>30 phút</b>. Một từ có nhiều loại từ thì được chọn nhiều đáp án. Mỗi câu đúng +10 điểm.</p><div><select id="qu"></select><select id="qw"></select></div><div id="qk" style="margin:8px 0"></div><div id="tl" style="font-weight:800;margin:6px 0"></div><button class="go" onclick="qs()">Bắt đầu!</button><button class="go y" onclick="TL[+$('qu').value]=1800;LM='';showTL()">🔄 Đặt lại 30 phút</button></div>
+<div class="box hide" id="pl"><b id="qn"></b> · <b id="sc"></b> · <b id="tm"></b><div class="bar"><i id="pr"></i></div><div class="q" id="qt"></div><div id="qo"></div><div class="q" id="fbk"></div><button class="go hide" id="nx" onclick="nq()">Tiếp ➜</button><div><button class="go r" onclick="stopQ()">⏹ Dừng, chọn từ khác</button></div></div>
+<div class="box hide" id="rs"><div style="font-size:3.5rem" id="tr"></div><h2 id="rt"></h2><button class="go" onclick="qs()">Chơi lại</button><button class="go y" onclick="back()">Chọn từ khác</button></div></section>
+</main>
+<script>
+// Mỗi dòng: từ|loại từ|nghĩa|Word forms|Synonyms|Antonyms|Expressions|ví dụ|dịch ví dụ (các mục cách nhau bằng "; ")
+// Thêm từ mới: chép thêm một dòng cùng định dạng vào Unit tương ứng.
+const U=[
+["Unit 1: Travel","✈️","#0b7285",`organizing vocabulary|n. (study skill)|sắp xếp từ vựng theo nhóm|organize (v.) sắp xếp; organization (n.) sự sắp xếp/tổ chức; organized (adj.) có tổ chức|classifying words (phân loại từ); grouping vocabulary (nhóm từ vựng)|random memorization (ghi nhớ ngẫu nhiên)|organize words by topic (nhóm từ theo chủ đề); group words by part of speech (nhóm từ theo từ loại); vocabulary notebook (sổ tay từ vựng)|Organizing vocabulary helps students remember travel words more systematically.|Sắp xếp từ vựng giúp học sinh nhớ từ về du lịch có hệ thống hơn.
+word family|n.|họ từ|family (n.) gia đình/nhóm; familiar (adj.) quen thuộc; familiarize (v.) làm quen|related words (các từ liên quan); word group (nhóm từ)|unrelated words (các từ không liên quan)|learn a word family (học họ từ); build word families (xây dựng họ từ); same root (cùng gốc từ)|The word family of navigate includes navigation and navigator.|Họ từ của navigate gồm navigation và navigator.
+collocation|n.|cụm từ kết hợp tự nhiên|collocate (v.) kết hợp tự nhiên; collocational (adj.) thuộc kết hợp từ|word partnership (cặp từ thường đi với nhau); fixed combination (kết hợp cố định)|unnatural combination (kết hợp không tự nhiên)|strong collocation (kết hợp mạnh); common collocation (kết hợp phổ biến); learn collocations (học kết hợp từ)|Book accommodation is a natural collocation in travel English.|Book accommodation là một kết hợp từ tự nhiên trong tiếng Anh du lịch.
+genuine|adj.|thật, chân thật|genuinely (adv.) một cách chân thật; genuineness (n.) tính chân thật|real (thật); authentic (xác thực); honest (trung thực)|fake (giả); artificial (nhân tạo/giả); dishonest (không trung thực)|genuine traveller (du khách thật); genuine review (đánh giá chân thật); genuine interest (sự quan tâm thật sự)|Genuine reviews are usually more useful than advertisements.|Các đánh giá chân thật thường hữu ích hơn quảng cáo.
+spare|adj./n./v.|thừa, dự phòng; dành ra|sparingly (adv.) một cách tiết kiệm|extra (thêm); available (sẵn có); free (rảnh)|occupied (bận); unavailable (không sẵn có)|spare room (phòng trống); spare time (thời gian rảnh); spare key (chìa khóa dự phòng)|A spare room can help travellers save money on accommodation.|Một phòng trống có thể giúp du khách tiết kiệm tiền chỗ ở.`]
+];
+const $=id=>document.getElementById(id),sh=a=>[...a].sort(()=>Math.random()-.5);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const ps=t=>t.split("; ").map(x=>{const m=x.match(/^(.*?)\s*\(([^)]*)\)\s*(.*)$/);return m?{t:m[1],a:m[2],r:m[3]}:{t:x,a:"",r:""}});
+const mkW=(l,c,u)=>{const f=l.split("|"),w={w:f[0],pos:f[1],vi:f[2],fm:f[3],sy:f[4],an:f[5],ex:f[6],s:f[7],sv:f[8],c,u};w.F=ps(w.fm);w.S=ps(w.sy);w.A=ps(w.an);w.E=ps(w.ex);return w};
+const W=U.flatMap((u,i)=>u[3].split("\n").map(l=>mkW(l,u[2],i)));
+const pool=v=>v==="all"?W:W.filter(w=>w.u==v);
+const say=w=>{if(!speechSynthesis)return;const u=new SpeechSynthesisUtterance(w);u.lang="en-US";u.rate=.85;speechSynthesis.cancel();speechSynthesis.speak(u)};
+const detail=w=>`<span class="k">Word forms / Pattern</span>${esc(w.fm)}<span class="k">Synonyms</span>${esc(w.sy)}<span class="k">Antonyms</span>${esc(w.an)}<span class="k">Expressions</span>${esc(w.ex)}<div class="ex" style="color:#1b2559">${esc(w.s)}<small>${esc(w.sv)}</small></div>`;
+const opts='<option value="all">🌈 Tất cả</option>'+U.map((u,i)=>`<option value="${i}">${u[1]} ${u[0]}</option>`).join("");
+$("fu").innerHTML=opts;function fillW(){const k=+$("qu").value;$("qw").innerHTML='<option value="all">🌈 Tất cả các từ trong Unit</option>'+W.map((w,i)=>w.u===k?`<option value="${i}">${w.w}</option>`:"").join("")}
+$("qu").innerHTML=U.map((u,i)=>`<option value="${i}">${u[1]} ${u[0]}</option>`).join("");$("qu").onchange=fillW;fillW();
+const tabs=[["learn","📚 Học từ"],["cards","🃏 Flashcard"],["quiz","🎮 Bài tập"]];
+$("nav").innerHTML=tabs.map(t=>`<button data-t="${t[0]}" onclick="show('${t[0]}')">${t[1]}</button>`).join("");
+function show(t){tabs.forEach(x=>{$(x[0]).classList.toggle("hide",x[0]!==t)});document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.t===t));if(t==="cards")fstart()}
+let cur=0;
+function learn(){
+ $("chips").innerHTML=U.map((u,i)=>`<button class="chip ${i===cur?"on":""}" onclick="cur=${i};learn()">${u[1]} ${u[0].split(":")[0]}</button>`).join("");
+ $("grid").innerHTML=pool(cur).map(w=>`<div class="card" style="--c:${w.c}"><button class="say" data-w="${esc(w.w)}" onclick="say(this.dataset.w)">🔊</button><h3>${esc(w.w)}</h3><span class="pos">${esc(w.pos)}</span><div class="vi">${esc(w.vi)}</div>${detail(w)}</div>`).join("");
+}
+let deck=[],fi=0;
+function fstart(){const p=pool($("fu").value);deck=$("fs").checked?sh(p):p;fi=0;fshow()}
+function fn(d){fi=(fi+d+deck.length)%deck.length;fshow()}
+function fshow(){const w=deck[fi];$("in").classList.remove("f");$("in").style.setProperty("--c",w.c);$("fb").style.setProperty("--c",w.c);$("ff").style.borderColor=w.c;
+ $("ff").innerHTML=`<h2 style="color:${w.c};margin:0">${esc(w.w)}</h2><span class="pos">${esc(w.pos)}</span><p>👆 Chạm để xem nghĩa, họ từ, đồng/trái nghĩa</p>`;
+ $("fb").innerHTML=`<b style="font-size:1.4rem">${esc(w.vi)}</b>`+detail(w).replace('class="ex" style="color:#1b2559"','class="ex" style="color:#1b2559;width:100%"');
+ $("fi").textContent=`Thẻ ${fi+1}/${deck.length}`;say(w.w)}
+let Q=[],qi=0,sc=0,lock=0,ST={},sel=new Set();
+const KS={word:"Từ cần học",form:"Word forms / Pattern",syn:"Synonyms",ant:"Antonyms",exp:"Expressions",ex:"Example"};
+const tags=p=>[...p.matchAll(/(phr\. v|adj|adv|prep|n|v)\./g)].map(m=>m[1]+".");
+const norm=t=>t.toLowerCase().replace(/\s+/g," ").trim();
+const hint=a=>a.split(" ").map(x=>x[0]+"_".repeat(x.length-1)).join("  ");
+const sp=(k,q,a)=>({k,q,a,ty:1,fb:""});
+const mv=(k,q,a,pool)=>({k,q,a,fb:"",o:sh([a,...sh([...new Set(pool)]).filter(x=>x&&x!==a).slice(0,3)])});
+function build(w){const O=W.filter(x=>x!==w),L=[],g=(k)=>O.flatMap(x=>x[k]).map(z=>z.a),h=(k)=>O.flatMap(x=>x[k]).map(z=>z.r);
+ L.push(sp("word",`Nghĩa tiếng Việt: "${w.vi}". Gõ từ/cụm tiếng Anh:`,w.w));
+ L.push({k:"word",q:`Chọn TẤT CẢ loại từ của "${w.w}" (một từ có thể có nhiều loại từ):`,ms:1,a:tags(w.pos),fb:`${w.w}: ${w.pos}`});
+ L.push(mv("word",`"${w.w}" nghĩa là gì?`,w.vi,O.map(x=>x.vi)));
+ w.F.forEach(f=>{L.push(sp("form",`Họ từ của "${w.w}": từ loại (${f.a}), nghĩa "${f.r}". Gõ từ tiếng Anh:`,f.t));L.push(mv("form",`"${f.t}" (${f.a}) nghĩa là gì?`,f.r,h("F")))});
+ w.S.forEach(s=>{L.push(sp("syn",`Gõ từ/cụm ĐỒNG NGHĨA với "${w.w}" có nghĩa "${s.a}":`,s.t));L.push(mv("syn",`"${s.t}" (đồng nghĩa với "${w.w}") nghĩa là gì?`,s.a,g("S")))});
+ w.A.forEach(s=>{L.push(sp("ant",`Gõ từ/cụm TRÁI NGHĨA với "${w.w}" có nghĩa "${s.a}":`,s.t));L.push(mv("ant",`"${s.t}" (trái nghĩa với "${w.w}") nghĩa là gì?`,s.a,g("A")))});
+ w.E.forEach(e=>{L.push(sp("exp",`Gõ cụm từ (dùng với "${w.w}") có nghĩa "${e.a}":`,e.t));L.push(mv("exp",`Cụm "${e.t}" nghĩa là gì?`,e.a,g("E")))});
+ L.push(mv("ex",`Dịch câu sang tiếng Việt: "${w.s}"`,w.sv,O.map(x=>x.sv)));
+ return L}
+let T=0,TI=null,TL={},cu=0,LM="";
+const fmt=t=>String(t/60|0).padStart(2,"0")+":"+String(t%60).padStart(2,"0");
+function showTL(){const t=TL[+$("qu").value]??1800;$("tl").innerHTML=(LM?LM+"<br>":"")+"⏱ Thời gian còn lại của Unit: "+fmt(t)}
+function tick(){T--;TL[cu]=T;$("tm").textContent="⏱ "+fmt(T);if(T<=0)fin(true)}
+function qs(){clearInterval(TI);const k=+$("qu").value,wv=$("qw").value,ks=[...document.querySelectorAll("#qk input:checked")].map(x=>x.value);
+ if(!ks.length){alert("Hãy chọn ít nhất một mục để kiểm tra.");return}
+ if((TL[k]??1800)<=0){alert("Unit này đã hết 30 phút. Bấm 'Đặt lại 30 phút' để chơi tiếp.");return}
+ Q=sh((wv==="all"?W.filter(w=>w.u===k):[W[+wv]]).flatMap(build).filter(q=>ks.includes(q.k)));qi=0;sc=0;ST={};LM="";
+ cu=k;T=TL[k]??1800;$("tm").textContent="⏱ "+fmt(T);TI=setInterval(tick,1000);
+ ["st","rs"].forEach(i=>$(i).classList.add("hide"));$("pl").classList.remove("hide");qshow()}
+function back(){clearInterval(TI);["pl","rs"].forEach(i=>$(i).classList.add("hide"));$("st").classList.remove("hide");showTL()}
+function stopQ(){const n=Object.values(ST).reduce((a,x)=>a+x[1],0);TL[cu]=T;LM=`⏹ Đã dừng: ${n} câu, ${sc} điểm.`;back()}
+function qshow(){lock=0;sel=new Set();const q=Q[qi];$("qn").textContent=`Câu ${qi+1}/${Q.length} · ${KS[q.k]}`;$("sc").textContent=`⭐ ${sc}`;$("pr").style.width=qi/Q.length*100+"%";$("fbk").textContent="";$("nx").classList.add("hide");$("qt").textContent=q.q;
+ $("qo").className=q.o||q.ms?"opts":"";
+ if(q.o)$("qo").innerHTML=q.o.map((o,i)=>`<button class="opt" onclick="ans(${i})">${esc(o)}</button>`).join("");
+ else if(q.ms)$("qo").innerHTML=["n.","v.","adj.","adv."].map(t=>`<button class="opt" onclick="tg(this,'${t}')">${t}</button>`).join("")+`<button class="go" style="grid-column:1/-1" onclick="chkm()">Kiểm tra</button>`;
+ else{$("qo").innerHTML=`<div class="ex" style="--c:#6c5ce7;text-align:left"><small>Gợi ý: ${esc(hint(q.a))}</small></div><input id="in2" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Gõ đáp án"><button class="go" onclick="chk()">Kiểm tra</button>`;$("in2").focus();$("in2").onkeydown=e=>{if(e.key==="Enter")lock?nq():chk()}}}
+function end(ok){const q=Q[qi];ST[q.k]=ST[q.k]||[0,0];ST[q.k][1]++;if(ok){sc+=10;ST[q.k][0]++}$("sc").textContent=`⭐ ${sc}`;$("fbk").innerHTML=(ok?"🎉 Chính xác! +10":`😅 Đáp án: <u>${esc([].concat(q.a).join(", "))}</u>`)+(q.fb?`<br><small>${esc(q.fb)}</small>`:"");$("fbk").style.color=ok?"#0a8f55":"#d6336c";$("nx").classList.remove("hide");$("nx").textContent=qi==Q.length-1?"Xem kết quả 🏆":"Tiếp ➜"}
+function ans(i){if(lock)return;lock=1;const q=Q[qi],b=[...document.querySelectorAll(".opt")],ok=q.o[i]===q.a;b.forEach(x=>x.disabled=1);b[i].classList.add(ok?"ok":"no");b[q.o.indexOf(q.a)].classList.add("ok");end(ok)}
+function tg(b,t){if(lock)return;sel.has(t)?sel.delete(t):sel.add(t);b.classList.toggle("sel")}
+function chkm(){if(lock||!sel.size)return;lock=1;const a=Q[qi].a;end(sel.size===a.length&&a.every(t=>sel.has(t)))}
+function chk(){if(lock)return;const i=$("in2");if(!i.value.trim())return;lock=1;const ok=norm(i.value)===norm(Q[qi].a);i.disabled=1;i.classList.add(ok?"ok":"no");end(ok)}
+function fin(out){clearInterval(TI);TL[cu]=Math.max(T,0);lock=1;$("pl").classList.add("hide");$("rs").classList.remove("hide");const n=Object.values(ST).reduce((a,x)=>a+x[1],0),p=sc/(Math.max(n,1)*10);$("tr").textContent=out?"⏰":p>=.9?"🏆":p>=.6?"🥈":"💪";$("rt").innerHTML=(out?"Hết giờ! ":"")+`Bạn đã làm ${n}/${Q.length} câu, được ${sc} điểm<br><small>`+Object.keys(ST).map(k=>`${KS[k]}: ${ST[k][0]}/${ST[k][1]}`).join(" · ")+"</small>"}
+function nq(){if(++qi>=Q.length)return fin(false);qshow()}
+$("qk").innerHTML=Object.keys(KS).map(k=>`<label style="display:inline-block;margin:4px 8px;font-weight:700"><input type="checkbox" value="${k}" checked> ${KS[k]}</label>`).join("");
+$("qu").onchange=()=>{fillW();showTL()};showTL();
+learn();show("learn");
+</script></body></html>
